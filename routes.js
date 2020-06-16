@@ -1,22 +1,21 @@
 const express = require('express')
 const { response, request } = require('express')
 const routes = express.Router()
+const instructors = require('./instructors')
 
 routes.get('/', (request, response) => {
     response.send('Hi!')
 })
 
-routes.get('/instructors', (request, response) => {
-    response.render('instructors/index')
-})
+routes.get('/instructors', instructors.get)
 
 routes.get('/instructors/create', (request, response) => {
     response.render('instructors/create')
 })
 
-routes.post('/instructor', (resquest, response) =>{
-    response.send('recebido')
-})
+routes.get('/instructors/:id', instructors.show)
+
+routes.post('/instructors', instructors.create)
 
 routes.get('/members', (request, response) => {
     response.send('Hi!')
