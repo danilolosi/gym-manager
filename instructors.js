@@ -1,8 +1,23 @@
 const fs = require('fs')
 const data = require('./data.json')
+const { age } = require('./utils')
 
 exports.show = (request, response) => {
 
+    const { id } = request.params
+
+    const foundInstructor = data.instructors.find(instructor => instructor.id == id)
+
+    if(!foundInstructor) return response.send('Instructor not found')
+
+    const instructor = {
+        ...foundInstructor,
+        age: age(foundInstructor.birth),
+        services: foundInstructor.services.split(','),
+        created_at: new Intl.DateTimeFormat('pt-BR').format(foundInstructor.created_at),
+    }
+
+    return response.render('instructors/show', {instructor: instructor})
 }
 
 exports.create = (request, response) => {
