@@ -68,11 +68,11 @@ exports.create = (request, response) => {
     })
 }
 
-exports.get = function(request, response){
+exports.get = (request, response) => {
     response.render('instructors/index')
 }
 
-exports.update = function(request, response){
+exports.update = (request, response) => {
 
     const { id } = request.body
 
@@ -92,5 +92,20 @@ exports.update = function(request, response){
         if(err) return response.send('Write error!')
 
         return response.redirect(`/instructors/${instructor.id}`)
+    })
+}
+
+exports.delete = (request, response) => {
+
+    const {id} = request.body
+
+    const filteredInstructors = data.instructors.filter(instructor => instructor.id != id)
+    
+    data.instructors = filteredInstructors
+
+    fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) =>{
+        if(err) return response.send('Write error!')
+
+        return response.redirect('/instructors')
     })
 }

@@ -21,6 +21,8 @@ routes.put('/instructors', instructors.update)
 
 routes.post('/instructors', instructors.create)
 
+routes.delete('/instructors', instructors.delete)
+
 routes.get('/members', (request, response) => {
     response.send('Hi!')
 })
