@@ -15,6 +15,10 @@ routes.get('/instructors/create', (request, response) => {
 
 routes.get('/instructors/:id', instructors.show)
 
+routes.get('/instructors/:id/edit', instructors.edit)
+
+routes.put('/instructors', instructors.update)
+
 routes.post('/instructors', instructors.create)
 
 routes.get('/members', (request, response) => {
