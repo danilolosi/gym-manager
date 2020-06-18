@@ -7,7 +7,7 @@ routes.get('/', (request, response) => {
     response.send('Hi!')
 })
 
-routes.get('/instructors', instructors.get)
+routes.get('/instructors', instructors.index)
 
 routes.get('/instructors/create', (request, response) => {
     response.render('instructors/create')

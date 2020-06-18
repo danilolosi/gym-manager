@@ -47,7 +47,7 @@ exports.create = (request, response) => {
 
     let {avatar_url, birth, name, services, gender} = request.body
 
-    const id = Number(data.instructors.length + 1)
+    const id = data.instructors[data.instructors.length -1].id + 1
     const created_at = Date.now()
     birth = Date.parse(request.body.birth)
     
@@ -68,25 +68,33 @@ exports.create = (request, response) => {
     })
 }
 
-exports.get = (request, response) => {
-    response.render('instructors/index')
+exports.index = (request, response) => {
+
+    response.render('instructors/index', {instructors: data.instructors})
 }
 
 exports.update = (request, response) => {
 
     const { id } = request.body
 
-    const foundInstructor = data.instructors.find(instructor => instructor.id == id)
+    let index = 0;
+    const foundInstructor = data.instructors.find((instructor, foundIndex) =>{
+        if(instructor.id == id){
+            index = foundIndex
+            return true
+        }
+    })
 
     if(!foundInstructor) return response.send('Instructor not found')
 
     const instructor = {
         ...foundInstructor,
         ...request.body,
-        birth: Date.parse(request.body.birth)
+        birth: Date.parse(request.body.birth),
+        id: Number(request.body.id)
     }
 
-    data.instructors[id -1] = instructor
+    data.instructors[index] = instructor
 
     fs.writeFile('data.json', JSON.stringify(data,null,2), (err) => {
         if(err) return response.send('Write error!')
