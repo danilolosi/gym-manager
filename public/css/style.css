@@ -129,6 +129,7 @@ header {
     color: var(--primary-color);
 }
 
+tbody tr td:nth-child(2) span, 
 .details .item span{
     padding: 8px 16px;
     background-color: var(--secondary-color);
@@ -145,7 +146,7 @@ header {
 
 /* ========== FORM =============*/
 
-input{
+input,select{
     width: 100%;
     outline: none;
     color: #555;
@@ -213,8 +214,6 @@ td, th{
     border-bottom: 1px solid #d9d9d9;
 }
 
-
-
 tbody tr:last-child td{
     border-bottom: none;
 }
@@ -235,7 +234,8 @@ tbody tr td:first-child span{
     border: 2px solid white;
 }
 
-tbody tr td:last-child a{
+tbody tr td:last-child a,
+.table-container  a{
     background-color: var(--primary-color);
     padding: 8px 16px;
     text-decoration: none;
@@ -245,9 +245,22 @@ tbody tr td:last-child a{
     border-radius: 4px;
 }
 
+tbody tr td:last-child a{
+    margin: 0;
+}
+
+.table-container  a{
+    margin-bottom: 16px;
+    display: inline-block;
+}
+
 .table-container thead tr th:last-child,
 td:last-child {
     text-align: center;
+}
+
+tbody tr td:nth-child(2) span{
+    margin: 0;
 }
 
 

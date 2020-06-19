@@ -1,6 +1,6 @@
 const fs = require('fs')
-const data = require('./data.json')
-const { age, date } = require('./utils')
+const data = require('../data.json')
+const { age, date } = require('../utils')
 
 exports.edit = (request, response) => {
 
@@ -13,7 +13,7 @@ exports.edit = (request, response) => {
 
         const instructor = {
             ...foundIntructor,
-            birth: date(foundIntructor.birth)
+            birth: date(foundIntructor.birth).iso
         }
 
     response.render('instructors/edit', { instructor: instructor})
@@ -47,7 +47,12 @@ exports.create = (request, response) => {
 
     let {avatar_url, birth, name, services, gender} = request.body
 
-    const id = data.instructors[data.instructors.length -1].id + 1
+    let id = 1
+    const lastInstructor = data.instructors[data.instructors.length -1]
+
+    if(lastInstructor)
+        id = lastInstructor.id + 1
+
     const created_at = Date.now()
     birth = Date.parse(request.body.birth)
     
@@ -70,7 +75,15 @@ exports.create = (request, response) => {
 
 exports.index = (request, response) => {
 
-    response.render('instructors/index', {instructors: data.instructors})
+    const instructors = data.instructors.map(instructor =>{
+        const newInstructor = {
+            ...instructor,
+            services : instructor.services.split(',')
+        }
+        return newInstructor
+    })
+
+    response.render('instructors/index', {instructors: instructors})
 }
 
 exports.update = (request, response) => {
@@ -116,4 +129,8 @@ exports.delete = (request, response) => {
 
         return response.redirect('/instructors')
     })
+}
+
+exports.form = (request, response) => {
+    response.render('instructors/create')
 }
